@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    osm-service: osm-light-ui
+  name: osm-light-ui-svc-np
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+    nodePort: 31000
+  selector:
+    osm-service: osm-light-ui
+  type: NodePort
+status:
+  loadBalancer: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    osm-service: osm-light-ui
+  name: osm-light-ui-svc-lb
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    osm-service: osm-light-ui
+  type: LoadBalancer
+status:
+  loadBalancer: {}

@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+  creationTimestamp: null
+  labels:
+    osm-service: osm-light-ui
+  name: osm-light-ui
+spec:
+  ports:
+  - name: "80"
+    port: 80
+    targetPort: 80
+  selector:
+    osm-service: osm-light-ui
+status:
+  loadBalancer: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    osm-service: osm-light-ui
+  name: osm-light-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      osm-service: osm-light-ui
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        osm-service: osm-light-ui
+    spec:
+      containers:
+      - env:
+        - name: OSM_SERVER
+          value: osm-nbi
+        image: opensourcemano/light-ui:latest
+        name: osm-light-ui
+        ports:
+        - containerPort: 80
+        resources: {}
+      restartPolicy: Always
+status: {}
